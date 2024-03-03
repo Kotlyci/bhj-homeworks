@@ -17,23 +17,23 @@ class Game {
   }
 
   registerEvents() {
-    /*
-      TODO:
-      Написать обработчик события, который откликается
-      на каждый введённый символ.
-      В случае правильного ввода символа вызываем this.success()
-      При неправильном вводе символа - this.fail();
-      DOM-элемент текущего символа находится в свойстве this.currentSymbol.
-     */
+    console.log(this.currentSymbol.textContent);
+
+    document.addEventListener('keydown', (event) => {
+
+      if (event.key == this.currentSymbol.textContent) {
+        this.success();
+      } else {
+        this.fail();
+      }
+    });
+
   }
 
   success() {
-    if(this.currentSymbol.classList.contains("symbol_current")) this.currentSymbol.classList.remove("symbol_current");
     this.currentSymbol.classList.add('symbol_correct');
     this.currentSymbol = this.currentSymbol.nextElementSibling;
-
     if (this.currentSymbol !== null) {
-      this.currentSymbol.classList.add('symbol_current');
       return;
     }
 
@@ -81,7 +81,7 @@ class Game {
     const html = [...word]
       .map(
         (s, i) =>
-          `<span class="symbol ${i === 0 ? 'symbol_current': ''}">${s}</span>`
+        `<span class="symbol ${i === 0 ? 'symbol_current': ''}">${s}</span>`
       )
       .join('');
     this.wordElement.innerHTML = html;
@@ -91,4 +91,3 @@ class Game {
 }
 
 new Game(document.getElementById('game'))
-
